@@ -17,6 +17,17 @@ if (!TOKEN) {
 let promptArg = null;
 let outputFile = null;
 let interactive = false;
+let asciiLogo = `
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣶⣾⣷⣶⣦⣄⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣠⣾⡇⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⠀
+⢀⣀⣀⣀⣠⣴⣾⣿⣿⠃⠀⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆
+⠈⠻⢿⣿⣿⣿⡿⣟⠃⠀⣀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡧
+⠀⠀⠀⠀⠈⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣼⣿⣿⣿⣿⣿⣿⠇
+⠀⠀⠀⠀⠀⠀⠀⠈⠙⢻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠛⡙⠛⢛⡻⠋⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠒⠄⠬⢉⣡⣠⣿⣿⣿⣇⡌⠲⠠⠋⠈⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⣿⡿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠁⠀DeepTerm
+`
 
 for (let i = 0; i < args.length; i++) {
   switch (args[i]) {
@@ -48,7 +59,7 @@ Options:
 
 function aiBannerPrompt() {
   const line = '━'.repeat(60);
-  const banner = `
+  const banner = `⠀⠀⠀⠀⠀⠀⠀⠀⠀
 Type or paste your prompt below
 [ESC] to send
 [Ctrl+C] to exit
@@ -130,6 +141,8 @@ async function sendPrompt(promptText) {
 }
 
 async function runInteractiveMode() {
+  console.clear();
+  console.log(`${asciiLogo}\n`)
   const profile = await core.getCurrentProfile(TOKEN);
   if (typeof profile !== "object") {
     console.log('❌ Failed to fetch user profile.');
@@ -137,7 +150,7 @@ async function runInteractiveMode() {
   }
 
   const email = profile.data.biz_data.email;
-  console.log(`Logged in as: ${email}`);
+  console.log(`Logged in as: ${email}\n`);
 
   if (profile.data.biz_data.chat.is_muted === 1) {
     const ts = profile.data.biz_data.chat.mute_until;
@@ -167,7 +180,12 @@ async function runInteractiveMode() {
   console.log('[+] Start a new chat session');
 
   const rl = readlinePrompt.createInterface({ input, output });
-  const ans = await rl.question("\n➡️ Select a session or type + to create new:  ");
+  let ans;
+  try{
+    ans = await rl.question("\n➡️ Select a session or type + to create new:  ");
+  }catch{
+    return;
+  }
   rl.close();
 
   if (ans === '+') {
@@ -177,7 +195,7 @@ async function runInteractiveMode() {
       return;
     }
     console.clear();
-    console.log(`\n✅ New session started.`);
+    console.log(`${asciiLogo}\n\n✅ New session started.`);
     await interactiveCLI(newChat.data.biz_data.id, null);
   } else {
     const idx = parseInt(ans.trim()) - 1;
@@ -187,7 +205,7 @@ async function runInteractiveMode() {
     }
     const selectedChat = chats[idx];
     console.clear();
-    console.log(`\n✅ Using session: ${selectedChat.title}`);
+    console.log(`${asciiLogo}\n\n✅ Using session: ${selectedChat.title}`);
     const chat_session = await core.fetchHistoryMessages(TOKEN, selectedChat.id);
     if (typeof chat_session !== "object") {
       console.log('❌ Failed to load messages.');
