@@ -226,7 +226,15 @@ async function runInteractiveMode() {
   if (interactive || (!promptArg && process.stdin.isTTY)) {
     await runInteractiveMode();
   } else if (promptArg) {
-    await sendPrompt(promptArg);
+    let finalPrompt = promptArg;
+    if (!process.stdin.isTTY) {
+      let inputText = '';
+      for await (const chunk of process.stdin) {
+        inputText += chunk;
+      }
+      finalPrompt += '\n\n' + inputText.trim();
+    }
+    await sendPrompt(finalPrompt);
   } else {
     let piped = '';
     for await (const chunk of process.stdin) {
