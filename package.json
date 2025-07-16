@@ -1,0 +1,22 @@
+{
+  "name": "deepterm",
+  "version": "1.0.0",
+  "description": "Bring DeepSeek to your terminal.",
+  "main": "deepterm-api.js",
+  "scripts": {
+    "start": "node deepterm-api.js",
+    "test": "nodemon deepterm-api.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "form-data": "^4.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
