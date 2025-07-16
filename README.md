@@ -1,5 +1,5 @@
 <div align="center">
-    <img alt="DeepTerm" src='DeepTerm-logo.png' width="400">
+    <img alt="DeepTerm" src='media/DeepTerm-logo.png' width="400">
 </div>
 
 <em><h2 align="center">Bring DeepSeek to your terminal</h2></em>
@@ -201,7 +201,7 @@ curl -X POST http://localhost:3000/completion \
 
 
 
-# Limitations & Risks
+## Limitations & Risks
 
 - **Rate Limiting and Access Restrictions:** DeepSeek may implement rate limiting or temporary restrictions if the service detects excessive or automated usage. Users are advised to interact with the service responsibly and avoid high-frequency automated requests.
 
@@ -256,12 +256,16 @@ Before contributing, please ensure your code follows project structure and is we
 Feel free to open an issue or discussion if you’re unsure how to get started, have feature ideas, or want to collaborate on larger tasks.
 Let’s build something awesome together.
 
-# Author
+
+## Demo
+<img src="media/DeepTerm-demo.gif">
+
+## Author
 
 Made with ❤️ by [@karjok](https://github.com/karjok)
 
 ## License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the [**MIT License**](LICENSE).
 
 You are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, provided that the original copyright notice and this permission notice are included in all copies or substantial portions.
