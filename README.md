@@ -161,7 +161,7 @@ By default, the server listens on port `3000`.
 curl -N -X POST http://localhost:3000/completion \
   -H "Content-Type: application/json" \
   -d '{
-    "token": "Bearer eyJ...your_token...",
+    "token": "eyJ...your_token...",
     "prompt": "Explain general relativity in simple terms",
     "stream": true
   }'
@@ -177,7 +177,7 @@ This will return a `text/event-stream` streaming response.
 curl -X POST http://localhost:3000/completion \
   -H "Content-Type: application/json" \
   -d '{
-    "token": "Bearer eyJ...your_token...",
+    "token": "eyJ...your_token...",
     "prompt": "What is quantum entanglement?",
     "stream": false
   }'
